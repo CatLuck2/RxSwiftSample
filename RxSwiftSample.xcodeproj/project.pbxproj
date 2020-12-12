@@ -78,10 +78,10 @@
 				61B5EB5D25839EC500E2A913 /* SceneDelegate.swift */,
 				61B5EB772583AC3B00E2A913 /* ViewController.xib */,
 				61B5EB5F25839EC500E2A913 /* ViewController.swift */,
+				61B5EB8225846D3000E2A913 /* CounterRxViewModel.swift */,
 				61B5EB6425839EC600E2A913 /* Assets.xcassets */,
 				61B5EB6625839EC600E2A913 /* LaunchScreen.storyboard */,
 				61B5EB6925839EC600E2A913 /* Info.plist */,
-				61B5EB8225846D3000E2A913 /* CounterRxViewModel.swift */,
 			);
 			path = RxSwiftSample;
 			sourceTree = "<group>";
