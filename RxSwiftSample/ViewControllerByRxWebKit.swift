@@ -1,20 +1,21 @@
 //
-//  ViewController.swift
+//  CounterRxViewModel.swift
 //  RxSwiftSample
 //
-//  Created by Nekokichi on 2020/12/11.
-// RxOptionalを使わない手法
+//  Created by Nekokichi on 2020/12/12.
+//
 
 import UIKit
 import WebKit
 import RxSwift
 import RxCocoa
 import RxOptional
+import RxWebKit
 
-class ViewController: UIViewController {
+class ViewControllerByRxWebKit: UIViewController {
 
-    @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var webView: WKWebView!
 
     private let disposeBag = DisposeBag()
 
@@ -25,17 +26,18 @@ class ViewController: UIViewController {
 
     private func setupWebView() {
         // プログレスバー、ゲージ、インジケータ、の制御に必要なオブザーバーを定義
-        let loadingObservable = webView.rx.observe(Bool.self, "loading")
-            // filterNil:nilなら値を流さず、そうでない場合はunwrapして値を流す
-            .filterNil()
-            // share:ObservableをCold->Hotに変換
+        // 変わったこと：引数を設定しなくなった
+        let loadingObservable = webView.rx.loading
             .share()
 
         // プログレスバーの表示/非表示
         loadingObservable
-            // map:値を生成、次回のメソッドで使用できる
             .map {return !$0}
-            // bind:subscribeと同じ処理
+            // observeOn:オブザーバーのスケジューラを指定
+            // スケジューラ：スレッド
+            // スケジューラには、直列2つ,並列2つ、がある
+            // 参考：https://scior.hatenablog.com/entry/2019/07/24/002743#SerialDispatchQueueScheduler
+            .observeOn(MainScheduler.instance)
             .bind(to: progressView.rx.isHidden)
             .disposed(by: disposeBag)
 
@@ -45,15 +47,17 @@ class ViewController: UIViewController {
             .disposed(by: disposeBag)
 
         // NavigationTitleの表示
-        loadingObservable
-            .map { [weak self] _ in return self?.webView.title }
+        // 変わったこと：map{}が不要に、map{}で参照変数やらを書く必要がなくなった
+        webView.rx.title
+            .filterNil()
+            .observeOn(MainScheduler.instance)
             .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
 
         // プログレスバーのゲージ制御
-        webView.rx.observe(Double.self, "estimatedProgress")
-            .filterNil()
+        webView.rx.estimatedProgress
             .map { return Float($0) }
+            .observeOn(MainScheduler.instance)
             .bind(to: progressView.rx.progress)
             .disposed(by: disposeBag)
 
@@ -63,4 +67,3 @@ class ViewController: UIViewController {
     }
 
 }
-

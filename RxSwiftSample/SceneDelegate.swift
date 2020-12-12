@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
 
-        let vc = ViewController()
+        let vc = ViewControllerByRxWebKit()
         window.rootViewController = vc
     }
 
