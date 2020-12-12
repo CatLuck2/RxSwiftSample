@@ -9,6 +9,7 @@ import RxSwift
 import RxCocoa
 
 struct CounterViewModelInput {
+    // Observable:イベントを検知
     let countUpButton: Observable<Void>
     let countDownButton: Observable<Void>
     let countResetButton: Observable<Void>
@@ -36,11 +37,12 @@ class CounterRxViewModel: CounterViewModelType {
     }
 
     func setup(input: CounterViewModelInput) {
-        input.countUpButton
+        input.countUpButton // イベント元
+            // .subscribe(OnNext:...)でOnErrorとOnCompletedを省略した書き方
             .subscribe(onNext: { [weak self] in
-                self!.incrementCount()
+                self!.incrementCount() // イベント処理
             })
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag) // 購読を破棄
 
         input.countDownButton
             .subscribe(onNext: { [weak self] in
@@ -57,23 +59,23 @@ class CounterRxViewModel: CounterViewModelType {
 
     private func incrementCount() {
         let count = countRelay.value + 1
-        countRelay.accept(count)
+        countRelay.accept(count) // countRelayに+1のイベントを送信
     }
 
     private func decrementCount() {
         let count = countRelay.value - 1
-        countRelay.accept(count)
+        countRelay.accept(count) // countRelayに-1のイベントを送信
     }
 
     private func resetCount() {
-        countRelay.accept(initialCount)
+        countRelay.accept(initialCount) // countRelayに0に初期化のイベントを送信
     }
 }
 
 extension CounterRxViewModel: CounterViewModelOutput {
     var counterText: Driver<String?> {
         return countRelay
-            .map {"Rxパターン:\($0)"}
-            .asDriver(onErrorJustReturn: nil)
+            .map {"Rxパターン:\($0)"} // countRelayのイベント値を出力
+            .asDriver(onErrorJustReturn: nil) // エラーが起きたらnilを通知？
     }
 }

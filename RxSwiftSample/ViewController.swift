@@ -29,10 +29,10 @@ class ViewController: UIViewController {
             countUpButton: countUpButton.rx.tap.asObservable(),
             countDownButton: countDownButton.rx.tap.asObservable(),
             countResetButton: countResetButton.rx.tap.asObservable())
-        viewModel.setup(input: input)
+        viewModel.setup(input: input) // 各UIButtonにタップ処理を登録
         viewModel.outputs?.counterText
-            .drive(countLabel.rx.text)
-            .disposed(by: disposeBag)
+            .drive(countLabel.rx.text) // coutLabelにテキストを送信？
+            .disposed(by: disposeBag) // 破棄
     }
 
 }
