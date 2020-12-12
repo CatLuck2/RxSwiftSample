@@ -7,5 +7,5 @@ target 'RxSwiftSample' do
 
   pod 'RxSwift', '~> 4.3.1'
   pod 'RxCocoa', '~> 4.3.1'
-
+  pod 'RxOptional', '~> 3.5.0'
 end
