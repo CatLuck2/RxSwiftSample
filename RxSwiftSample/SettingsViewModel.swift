@@ -3,7 +3,7 @@
 //  RxSwiftSample
 //
 //  Created by Nekokichi on 2020/12/12.
-//
+//　Modelを用いてViewに最適な形の値を返せる変数と関数を用意、ViewがViewModelを参照するだけでTableViewを表示させる役割
 
 import RxSwift
 import RxCocoa
@@ -11,6 +11,7 @@ import RxDataSources
 
 class SettingsViewModel {
 
+    // cellのデータ変更をdataSourceに通知
     let items = BehaviorRelay<[SettingsSectionModel]>(value: [])
 
     var itemsObservable: Observable<[SettingsSectionModel]> {

@@ -3,7 +3,13 @@
 //  RxSwiftSample
 //
 //  Created by Nekokichi on 2020/12/12.
-//
+//　ライフサイクルメソッドを用いてViewを描画、
+/*
+ RxDataSourcesを使って変わること
+ ・delegateメソッドの大半が不要
+ ・セクションとセルの値や設定を別ファイルで整理できた
+ ・rx.itemDelete, rx.itemSelected、のように、rx.状態/プロパティ、で変更を検知し、次に実行する処理をかける
+ */
 
 import UIKit
 import RxSwift
@@ -15,6 +21,7 @@ class SettingsVC: UIViewController {
 
     private var disposeBag = DisposeBag()
 
+    // numberOfSections,tableReloadの役割
     private lazy var dataSource = RxTableViewSectionedReloadDataSource<SettingsSectionModel>(configureCell: configureCell)
 
     // cellForRowAtの役割ーセルを返す
@@ -32,7 +39,7 @@ class SettingsVC: UIViewController {
                 cell.isUserInteractionEnabled = false
                 return cell
             }
-    }
+        }
 
     private var viewModel: SettingsViewModel!
 
@@ -51,13 +58,14 @@ class SettingsVC: UIViewController {
 
     // TableViewの設定
     private func setupTableView() {
+        // delegateやセルの登録
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.contentInset.bottom = 12.0
         tableView.rx
             .setDelegate(self)
             .disposed(by: disposeBag)
         // didTapSelectRowAt-セルをタップ時の処理
-        // 手続き形式ではなく、宣言のように処理を登録
+        // itemSelected時にsubscribe(タップされたら購読)
         tableView.rx.itemSelected
             .subscribe(onNext: { [weak self] indexPath in
                 guard let item_ = self?.dataSource[indexPath] else {return}
@@ -67,8 +75,10 @@ class SettingsVC: UIViewController {
             .disposed(by: disposeBag)
     }
 
+
     private func setupViewModel() {
         viewModel = SettingsViewModel()
+        // ViewModelとdataSourceを紐付け？
         viewModel.items
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
@@ -97,11 +107,5 @@ extension SettingsVC: UITableViewDelegate {
         let headerView = UIView()
         headerView.backgroundColor = .lightGray
         return headerView
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView()
-        footerView.backgroundColor = .lightGray
-        return footerView
     }
 }

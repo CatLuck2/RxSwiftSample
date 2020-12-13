@@ -3,11 +3,12 @@
 //  RxSwiftSample
 //
 //  Created by Nekokichi on 2020/12/12.
-//
+// セクションとセルの定義、それぞれの高さ、各セルのテキスト
 
 import UIKit
 import RxDataSources
 
+// セクションとセルを保持
 typealias SettingsSectionModel = SectionModel<SettingsSection, SettingsItem>
 
 // セクション
