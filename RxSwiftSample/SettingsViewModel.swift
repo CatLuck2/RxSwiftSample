@@ -35,6 +35,8 @@ class SettingsViewModel {
             .notification,
             .contents
         ]
+        // model:セクションの識別値
+        // items:セルの識別値群
         return SettingsSectionModel(model: .account, items: items)
     }
 
