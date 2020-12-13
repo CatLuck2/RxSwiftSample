@@ -75,7 +75,6 @@ class SettingsVC: UIViewController {
             .disposed(by: disposeBag)
     }
 
-
     private func setupViewModel() {
         viewModel = SettingsViewModel()
         // ViewModelとdataSourceを紐付け？
@@ -104,7 +103,8 @@ extension SettingsVC: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
+        let headerView = UITableViewHeaderFooterView()
+        headerView.textLabel?.text = dataSource.sectionModels[section].model.title
         headerView.backgroundColor = .lightGray
         return headerView
     }

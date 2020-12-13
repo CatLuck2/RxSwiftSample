@@ -17,6 +17,18 @@ enum SettingsSection {
     case common
     case original
 
+    // セクションのテキスト
+    var title: String? {
+        switch self {
+        case .account:
+            return "アカウント"
+        case .common:
+            return "一般"
+        case .original:
+            return "オリジナル"
+        }
+    }
+
     var headerHeight: CGFloat {
         return 40.0
     }
