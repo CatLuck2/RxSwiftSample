@@ -15,8 +15,6 @@
 		61B5EBCB2584F35F00E2A913 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EBC92584F35F00E2A913 /* SettingsVC.xib */; };
 		61B5EBCE2584F39900E2A913 /* SettingsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBCD2584F39900E2A913 /* SettingsSectionModel.swift */; };
 		61B5EBD22584F3A300E2A913 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBD12584F3A300E2A913 /* SettingsViewModel.swift */; };
-		61B5EBE3258654FE00E2A913 /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBE2258654FE00E2A913 /* AlertModel.swift */; };
-		61B5EBE62586550D00E2A913 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBE52586550D00E2A913 /* AlertViewModel.swift */; };
 		8626766712DF95386337D549 /* Pods_RxSwiftSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F818630FEF025D961739D8F /* Pods_RxSwiftSample.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +29,6 @@
 		61B5EBC92584F35F00E2A913 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
 		61B5EBCD2584F39900E2A913 /* SettingsSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionModel.swift; sourceTree = "<group>"; };
 		61B5EBD12584F3A300E2A913 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		61B5EBE2258654FE00E2A913 /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
-		61B5EBE52586550D00E2A913 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		6A81EF9EF4607F9B920179EA /* Pods-RxSwiftSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftSample.release.xcconfig"; path = "Target Support Files/Pods-RxSwiftSample/Pods-RxSwiftSample.release.xcconfig"; sourceTree = "<group>"; };
 		8F818630FEF025D961739D8F /* Pods_RxSwiftSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxSwiftSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3EE48317F07486096347CFB /* Pods-RxSwiftSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftSample.debug.xcconfig"; path = "Target Support Files/Pods-RxSwiftSample/Pods-RxSwiftSample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,8 +78,6 @@
 			children = (
 				61B5EB5B25839EC500E2A913 /* AppDelegate.swift */,
 				61B5EB5D25839EC500E2A913 /* SceneDelegate.swift */,
-				61B5EBE2258654FE00E2A913 /* AlertModel.swift */,
-				61B5EBE52586550D00E2A913 /* AlertViewModel.swift */,
 				61B5EBCD2584F39900E2A913 /* SettingsSectionModel.swift */,
 				61B5EBD12584F3A300E2A913 /* SettingsViewModel.swift */,
 				61B5EBC82584F35E00E2A913 /* SettingsVC.swift */,
@@ -220,9 +214,7 @@
 				61B5EBD22584F3A300E2A913 /* SettingsViewModel.swift in Sources */,
 				61B5EBCE2584F39900E2A913 /* SettingsSectionModel.swift in Sources */,
 				61B5EB5C25839EC500E2A913 /* AppDelegate.swift in Sources */,
-				61B5EBE62586550D00E2A913 /* AlertViewModel.swift in Sources */,
 				61B5EB5E25839EC500E2A913 /* SceneDelegate.swift in Sources */,
-				61B5EBE3258654FE00E2A913 /* AlertModel.swift in Sources */,
 				61B5EBCA2584F35F00E2A913 /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

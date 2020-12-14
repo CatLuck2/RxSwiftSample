@@ -83,16 +83,6 @@ class SettingsVC: UIViewController {
             .subscribe(onNext: { [weak self] indexPath in
                 guard let item_ = self?.dataSource[indexPath] else {return}
                 self?.tableView.deselectRow(at: indexPath, animated: true)
-//                // アラート１
-                alert.onNext(())
-                alert.onCompleted()
-//                // アラート２
-//                self?.showAlert(title: "タイトル", message: "メッセージ", style: .alert,
-//                 actions: [AlertAction.action(title: "no", style: .destructive), AlertAction.action(title: "yes")])
-//                .subscribe(onNext: { selectedIndex in
-//                    print(selectedIndex)
-//                })
-//                .disposed(by: self!.disposeBag)
             })
             .disposed(by: disposeBag)
     }
@@ -105,27 +95,6 @@ class SettingsVC: UIViewController {
             .disposed(by: disposeBag)
         viewModel.updateItem()
     }
-
-    private func showAlert(title: String?, message: String?, style: UIAlertController.Style, actions: [AlertAction]) -> Observable<Void>
-    {
-        // Observableを返す
-        return Observable.create { observer in
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
-
-            actions.enumerated().forEach { index, action in
-                let action = UIAlertAction(title: action.title, style: action.style) { _ in
-                    // ボタンが押されたら、購読を破棄
-                    observer.onCompleted()
-                }
-                alertController.addAction(action)
-            }
-
-            self.present(alertController, animated: true, completion: nil)
-
-            return Disposables.create { alertController.dismiss(animated: true, completion: nil) }
-        }
-    }
-
 }
 
 extension SettingsVC: UITableViewDelegate {
