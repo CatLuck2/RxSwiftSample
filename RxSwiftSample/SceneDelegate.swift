@@ -21,8 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
 
-        let vc = SettingsVC()
-        window.rootViewController = vc
+        // NavigationControllerを組み込む
+        let rootVC = SettingsVC(nibName: "SettingsVC", bundle: nil)
+        let rootNavigationController = UINavigationController(rootViewController: rootVC)
+        window.rootViewController = rootNavigationController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
