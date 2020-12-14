@@ -56,7 +56,7 @@ class SettingsVC: UIViewController {
 
     // 起動時の設定
     private func setupViewController() {
-        // BarButtonItemを用意
+        // BarButtonItemの設定
         let presentAddVC = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         presentAddVC.rx.tap
             .subscribe(onNext: {
