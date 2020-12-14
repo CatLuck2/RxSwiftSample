@@ -56,7 +56,15 @@ class SettingsVC: UIViewController {
 
     // 起動時の設定
     private func setupViewController() {
-        navigationItem.title = "設定"
+        // BarButtonItemを用意
+        let presentAddVC = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        presentAddVC.rx.tap
+            .subscribe(onNext: {
+                let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        self.navigationItem.rightBarButtonItem = presentAddVC
     }
 
     // TableViewの設定
@@ -83,6 +91,8 @@ class SettingsVC: UIViewController {
             .subscribe(onNext: { [weak self] indexPath in
                 guard let item_ = self?.dataSource[indexPath] else {return}
                 self?.tableView.deselectRow(at: indexPath, animated: true)
+                let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }
