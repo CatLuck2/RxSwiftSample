@@ -13,8 +13,6 @@
 		61B5EB6825839EC600E2A913 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EB6625839EC600E2A913 /* LaunchScreen.storyboard */; };
 		61B5EBCA2584F35F00E2A913 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBC82584F35E00E2A913 /* SettingsVC.swift */; };
 		61B5EBCB2584F35F00E2A913 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EBC92584F35F00E2A913 /* SettingsVC.xib */; };
-		61B5EBCE2584F39900E2A913 /* SettingsSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBCD2584F39900E2A913 /* SettingsSectionModel.swift */; };
-		61B5EBD22584F3A300E2A913 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBD12584F3A300E2A913 /* SettingsViewModel.swift */; };
 		61B5EBF525875B0700E2A913 /* CreateAndUpdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBF325875B0700E2A913 /* CreateAndUpdateVC.swift */; };
 		61B5EBF625875B0700E2A913 /* CreateAndUpdateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EBF425875B0700E2A913 /* CreateAndUpdateVC.xib */; };
 		61B5EC062587AD7400E2A913 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EC052587AD7400E2A913 /* Task.swift */; };
@@ -30,8 +28,6 @@
 		61B5EB6925839EC600E2A913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61B5EBC82584F35E00E2A913 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		61B5EBC92584F35F00E2A913 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
-		61B5EBCD2584F39900E2A913 /* SettingsSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionModel.swift; sourceTree = "<group>"; };
-		61B5EBD12584F3A300E2A913 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		61B5EBF325875B0700E2A913 /* CreateAndUpdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAndUpdateVC.swift; sourceTree = "<group>"; };
 		61B5EBF425875B0700E2A913 /* CreateAndUpdateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAndUpdateVC.xib; sourceTree = "<group>"; };
 		61B5EC052587AD7400E2A913 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -97,7 +93,6 @@
 		61B5EC082587AD7B00E2A913 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				61B5EBCD2584F39900E2A913 /* SettingsSectionModel.swift */,
 				61B5EC052587AD7400E2A913 /* Task.swift */,
 			);
 			path = Model;
@@ -106,7 +101,6 @@
 		61B5EC092587AD8900E2A913 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				61B5EBD12584F3A300E2A913 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -245,8 +239,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61B5EBD22584F3A300E2A913 /* SettingsViewModel.swift in Sources */,
-				61B5EBCE2584F39900E2A913 /* SettingsSectionModel.swift in Sources */,
 				61B5EBF525875B0700E2A913 /* CreateAndUpdateVC.swift in Sources */,
 				61B5EB5C25839EC500E2A913 /* AppDelegate.swift in Sources */,
 				61B5EB5E25839EC500E2A913 /* SceneDelegate.swift in Sources */,
