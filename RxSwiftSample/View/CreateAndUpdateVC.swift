@@ -19,7 +19,7 @@ class CreateAndUpdateVC: UIViewController {
     }
 
     private func setupViewController() {
-        navigationController?.title = "追加/編集"
+        self.navigationController?.title = "追加/編集"
 
         // BarButtonItemの設定
         let presentAddVC = UIBarButtonItem()
@@ -29,7 +29,7 @@ class CreateAndUpdateVC: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-        self.navigationItem.rightBarButtonItem = presentAddVC
+        navigationItem.rightBarButtonItem = presentAddVC
 
         // textFieldの設定
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
