@@ -35,6 +35,7 @@ class SettingsVC: UIViewController {
 
     // 起動時の設定
     private func setupViewController() {
+        self.navigationController?.delegate = self
         // BarButtonItemの設定
         let presentAddVC = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         presentAddVC.rx.tap
@@ -48,6 +49,10 @@ class SettingsVC: UIViewController {
 
     // TableViewの設定
     private func setupTableView() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.rx
+            .setDataSource(self)
+            .disposed(by: disposeBag)
         // didTapSelectRowAt-セルをタップ時の処理
         // itemSelected時にsubscribe(タップされたら購読)
         tableView.rx.itemSelected
@@ -68,8 +73,21 @@ extension SettingsVC: UITableViewDataSource {
         tasks.value.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = tasks.value[indexPath.row].title
         return cell
+    }
+}
+
+extension SettingsVC: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        guard let vc = viewController as? CreateAndUpdateVC else { return }
+        vc.taskSubjectObservable
+            .subscribe(onNext: { [self] task in
+                // tasksに新規データ（task）を追加
+                tasks.accept(tasks.value + [task])
+                tableView.reloadData()
+            })
+            .disposed(by: disposeBag)
     }
 }
