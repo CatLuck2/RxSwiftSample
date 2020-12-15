@@ -59,3 +59,17 @@ class SettingsVC: UIViewController {
             .disposed(by: disposeBag)
     }
 }
+
+extension SettingsVC: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tasks.value.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = tasks.value[indexPath.row].title
+        return cell
+    }
+}
