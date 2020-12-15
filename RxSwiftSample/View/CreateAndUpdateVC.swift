@@ -12,6 +12,11 @@ import RxCocoa
 class CreateAndUpdateVC: UIViewController {
 
     private var disposeBag = DisposeBag()
+    /*
+     ・taskSubject.onNext(Task())
+     ・taskSubjectObservableがtaskSubjectの変更を検知？
+     ・taskSubjectObservableでTask()を取得
+     */
     private let taskSubject = PublishSubject<Task>()
     var taskSubjectObservable: Observable<Task> {
         return taskSubject.asObserver()
@@ -26,7 +31,7 @@ class CreateAndUpdateVC: UIViewController {
     private func setupViewController() {
         self.navigationController?.title = "追加/編集"
 
-        // textFieldの設定
+        // textFieldのView設定
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.borderStyle = .roundedRect
         textField.placeholder = "タスク名を入力"
@@ -37,15 +42,29 @@ class CreateAndUpdateVC: UIViewController {
         textField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
 
         // BarButtonItemの設定
-        let presentAddVC = UIBarButtonItem()
-        presentAddVC.title = "追加"
-        presentAddVC.rx.tap
+        let presentAddVCBarButton = UIBarButtonItem()
+        presentAddVCBarButton.title = "追加"
+        presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
                 taskSubject.onNext(Task(title: textField.text!))
                 navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-        navigationItem.rightBarButtonItem = presentAddVC
+        navigationItem.rightBarButtonItem = presentAddVCBarButton
+
+        // textFieldのobserve設定
+        textField.rx.text.asDriver()
+            .drive(onNext: { [self] text in
+                guard let text = text else {return}
+                if text.isEmpty {
+                    presentAddVCBarButton.isEnabled = false
+                    presentAddVCBarButton.tintColor = UIColor.clear
+                } else {
+                    presentAddVCBarButton.isEnabled = true
+                    presentAddVCBarButton.tintColor = UIColor.link
+                }
+            })
+            .disposed(by: disposeBag)
     }
 
 }
