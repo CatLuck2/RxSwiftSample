@@ -27,8 +27,12 @@ class CreateAndUpdateVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let text = textOfSelectedCell else { return }
+        guard let text = textOfSelectedCell else {
+            self.title = "追加"
+            return
+        }
         textField.text = text
+        self.title = "編集"
     }
 
     override func viewDidLoad() {
