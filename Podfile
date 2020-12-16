@@ -8,4 +8,5 @@ target 'RxSwiftSample' do
   pod 'RxSwift', '~> 4.3.1'
   pod 'RxCocoa', '~> 4.3.1'
   pod 'RxDataSources', '~> 3.1.0'
+  pod 'Realm', '~> 5.4.7'
 end
