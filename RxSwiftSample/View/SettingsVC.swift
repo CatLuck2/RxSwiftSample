@@ -79,6 +79,12 @@ extension SettingsVC: UITableViewDataSource {
         cell.textLabel?.text = tasks.value[indexPath.row].title
         return cell
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // ここでセルを削除したい
+            tableView.reloadData()
+        }
+    }
 }
 
 extension SettingsVC: UINavigationControllerDelegate {
