@@ -25,6 +25,8 @@ class SettingsVC: UIViewController {
     private var disposeBag = DisposeBag()
     // タスクを保持
     private let tasks = BehaviorRelay<[Task]>(value: [])
+    // 選択されたセルの番号
+    private var numOfSelectedCell:Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +44,7 @@ class SettingsVC: UIViewController {
             .subscribe(onNext: {
                 let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
                 self.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         self.navigationItem.rightBarButtonItem = presentAddVC
     }
 
@@ -56,12 +57,13 @@ class SettingsVC: UIViewController {
         // didTapSelectRowAt-セルをタップ時の処理
         // itemSelected時にsubscribe(タップされたら購読)
         tableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.tableView.deselectRow(at: indexPath, animated: true)
+            .subscribe(onNext: { [self] indexPath in
+                numOfSelectedCell = indexPath.row
+                tableView.deselectRow(at: indexPath, animated: true)
                 let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
-                self?.navigationController?.pushViewController(vc, animated: true)
-            })
-            .disposed(by: disposeBag)
+                vc.textOfSelectedCell = tasks.value[indexPath.row].title
+                navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: disposeBag)
     }
 }
 
@@ -82,12 +84,24 @@ extension SettingsVC: UITableViewDataSource {
 extension SettingsVC: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         guard let vc = viewController as? CreateAndUpdateVC else { return }
+        // CreateAndUpdateVCから遷移してきた時
         vc.taskSubjectObservable
             .subscribe(onNext: { [self] task in
-                // tasksに新規データ（task）を追加
-                tasks.accept(tasks.value + [task])
-                tableView.reloadData()
-            })
-            .disposed(by: disposeBag)
+                // numOfSelectedCellが整数（Optionalではない）かどうか
+                if let indexPathRow = numOfSelectedCell {
+                    // 初期化
+                    numOfSelectedCell = nil
+                    // tasksに更新データ（task）を追加
+                    // BehaviorRelay内の値は更新できないので、一時変数を経由して、更新データを代入
+                    var tasksArray = tasks.value
+                    tasksArray[indexPathRow] = task
+                    tasks.accept(tasksArray)
+                    tableView.reloadData()
+                } else {
+                    // tasksに新規データ（task）を追加
+                    tasks.accept(tasks.value + [task])
+                    tableView.reloadData()
+                }
+            }).disposed(by: disposeBag)
     }
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 struct Task {
-    let title: String
+    var title: String
 }

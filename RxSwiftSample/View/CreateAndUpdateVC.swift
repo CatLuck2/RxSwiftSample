@@ -21,6 +21,15 @@ class CreateAndUpdateVC: UIViewController {
     var taskSubjectObservable: Observable<Task> {
         return taskSubject.asObserver()
     }
+    private var textField = UITextField()
+    var textOfSelectedCell:String?
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        guard let text = textOfSelectedCell else { return }
+        textField.text = text
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +41,7 @@ class CreateAndUpdateVC: UIViewController {
         self.navigationController?.title = "追加/編集"
 
         // textFieldのView設定
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         textField.borderStyle = .roundedRect
         textField.placeholder = "タスク名を入力"
         self.view.addSubview(textField)
@@ -48,13 +57,12 @@ class CreateAndUpdateVC: UIViewController {
             .subscribe(onNext: { [self] in
                 taskSubject.onNext(Task(title: textField.text!))
                 navigationController?.popViewController(animated: true)
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = presentAddVCBarButton
 
         // textFieldのobserve設定
         textField.rx.text.asDriver()
-            .drive(onNext: { [self] text in
+            .drive(onNext: { text in
                 guard let text = text else {return}
                 if text.isEmpty {
                     presentAddVCBarButton.isEnabled = false
@@ -63,8 +71,7 @@ class CreateAndUpdateVC: UIViewController {
                     presentAddVCBarButton.isEnabled = true
                     presentAddVCBarButton.tintColor = UIColor.link
                 }
-            })
-            .disposed(by: disposeBag)
+            }).disposed(by: disposeBag)
     }
 
 }
