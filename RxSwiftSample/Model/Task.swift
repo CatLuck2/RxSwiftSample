@@ -6,7 +6,12 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct Task {
     var title: String
+}
+
+class TaskOfRealm: Object {
+    <#code#>
 }
