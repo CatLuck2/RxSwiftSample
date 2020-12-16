@@ -81,7 +81,9 @@ extension SettingsVC: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // ここでセルを削除したい
+            var tasksArray = tasks.value
+            tasksArray.remove(at: indexPath.row)
+            tasks.accept(tasksArray)
             tableView.reloadData()
         }
     }
