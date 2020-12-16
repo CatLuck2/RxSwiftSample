@@ -20,3 +20,7 @@ class TaskOfRealm: Object {
         "id"
     }
 }
+
+class TasksOfRealm: Object {
+    var taskList = List<TaskOfRealm>()
+}
