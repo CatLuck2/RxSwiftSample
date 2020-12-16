@@ -17,6 +17,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 class SettingsVC: UIViewController {
 
@@ -25,11 +26,17 @@ class SettingsVC: UIViewController {
     private var disposeBag = DisposeBag()
     // タスクを保持
     private let tasks = BehaviorRelay<[Task]>(value: [])
+    private let realm = try! Realm()
+    private var realmResults:Results<TaskOfRealm>! = nil
     // 選択されたセルの番号
     private var numOfSelectedCell:Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Realmのテストデータを取得
+        realmResults = realm.objects(TaskOfRealm.self)
+        print(realm.objects(TaskOfRealm.self))
 
         setupViewController()
         setupTableView()
@@ -84,6 +91,10 @@ extension SettingsVC: UITableViewDataSource {
             var tasksArray = tasks.value
             tasksArray.remove(at: indexPath.row)
             tasks.accept(tasksArray)
+            // Realmのデータを削除
+            try! realm.write {
+                realm.delete(realmResults[0])
+            }
             tableView.reloadData()
         }
     }
@@ -104,10 +115,20 @@ extension SettingsVC: UINavigationControllerDelegate {
                     var tasksArray = tasks.value
                     tasksArray[indexPathRow] = task
                     tasks.accept(tasksArray)
+                    // Realmのデータを更新
+                    try! realm.write {
+                        realmResults[0].title = task.title
+                    }
                     tableView.reloadData()
                 } else {
                     // tasksに新規データ（task）を追加
                     tasks.accept(tasks.value + [task])
+                    // Realmにテスト用データを追加
+                    try! realm.write {
+                        let testTask = TaskOfRealm()
+                        testTask.title = task.title
+                        realm.add(testTask, update: .modified)
+                    }
                     tableView.reloadData()
                 }
             }).disposed(by: disposeBag)
