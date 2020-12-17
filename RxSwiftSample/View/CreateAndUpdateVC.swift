@@ -17,8 +17,8 @@ class CreateAndUpdateVC: UIViewController {
      ・taskSubjectObservableがtaskSubjectの変更を検知？
      ・taskSubjectObservableでTask()を取得
      */
-    private let taskSubject = PublishSubject<Task>()
-    var taskSubjectObservable: Observable<Task> {
+    private let taskSubject = PublishSubject<TaskOfRealm>()
+    var taskSubjectObservable: Observable<TaskOfRealm> {
         return taskSubject.asObserver()
     }
     private var textField = UITextField()
@@ -59,7 +59,7 @@ class CreateAndUpdateVC: UIViewController {
         presentAddVCBarButton.title = "追加"
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
-                taskSubject.onNext(Task(title: textField.text!))
+                taskSubject.onNext(TaskOfRealm(title:textField.text!))
                 navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = presentAddVCBarButton

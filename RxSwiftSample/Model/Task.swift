@@ -15,6 +15,15 @@ struct Task {
 class TaskOfRealm: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var id: Int = 1
+
+    convenience init(title:String) {
+        self.init()
+        self.title = title
+    }
+
+//    required init() {
+//        fatalError("init() has not been implemented")
+//    }
 }
 
 class TasksOfRealm: Object {
