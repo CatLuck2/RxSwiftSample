@@ -27,7 +27,7 @@ class SettingsVC: UIViewController {
     // タスクを保持
     private let tasks = BehaviorRelay<[Task]>(value: [])
     private let realm = try! Realm()
-    private var realmResults:Results<TaskOfRealm>! = nil
+    private var realmResults:Results<TasksOfRealm>!
     // 選択されたセルの番号
     private var numOfSelectedCell:Int?
 
@@ -35,8 +35,7 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
 
         // Realmのテストデータを取得
-        realmResults = realm.objects(TaskOfRealm.self)
-        print(realm.objects(TaskOfRealm.self))
+        realmResults = realm.objects(TasksOfRealm.self)
 
         setupViewController()
         setupTableView()
@@ -68,7 +67,8 @@ class SettingsVC: UIViewController {
                 numOfSelectedCell = indexPath.row
                 tableView.deselectRow(at: indexPath, animated: true)
                 let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
-                vc.textOfSelectedCell = tasks.value[indexPath.row].title
+//                vc.textOfSelectedCell = tasks.value[indexPath.row].title
+                vc.textOfSelectedCell = realmResults[0].taskList[indexPath.row].title
                 navigationController?.pushViewController(vc, animated: true)
             }).disposed(by: disposeBag)
     }
@@ -79,21 +79,23 @@ extension SettingsVC: UITableViewDataSource {
         1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tasks.value.count
+//        tasks.value.count
+        realmResults[0].taskList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = tasks.value[indexPath.row].title
+//        cell.textLabel?.text = tasks.value[indexPath.row].title
+        cell.textLabel?.text = realmResults[0].taskList[indexPath.row].title
         return cell
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var tasksArray = tasks.value
-            tasksArray.remove(at: indexPath.row)
-            tasks.accept(tasksArray)
+//            var tasksArray = tasks.value
+//            tasksArray.remove(at: indexPath.row)
+//            tasks.accept(tasksArray)
             // Realmのデータを削除
             try! realm.write {
-                realm.delete(realmResults[0])
+                realmResults[0].taskList.remove(at: indexPath.row)
             }
             tableView.reloadData()
         }
@@ -112,22 +114,33 @@ extension SettingsVC: UINavigationControllerDelegate {
                     numOfSelectedCell = nil
                     // tasksに更新データ（task）を追加
                     // BehaviorRelay内の値は更新できないので、一時変数を経由して、更新データを代入
-                    var tasksArray = tasks.value
-                    tasksArray[indexPathRow] = task
-                    tasks.accept(tasksArray)
+//                    var tasksArray = tasks.value
+//                    tasksArray[indexPathRow] = task
+//                    tasks.accept(tasksArray)
                     // Realmのデータを更新
                     try! realm.write {
-                        realmResults[0].title = task.title
+                        realmResults[0].taskList[indexPathRow].title = task.title
                     }
                     tableView.reloadData()
                 } else {
-                    // tasksに新規データ（task）を追加
-                    tasks.accept(tasks.value + [task])
+//                    // tasksに新規データ（task）を追加
+//                    tasks.accept(tasks.value + [task])
                     // Realmにテスト用データを追加
-                    try! realm.write {
-                        let testTask = TaskOfRealm()
-                        testTask.title = task.title
-                        realm.add(testTask, update: .modified)
+                    if realmResults.isEmpty {
+                        var array:[[String:Any]]! = []
+                        for task in tasks.value {
+                            array.append(["title":task.title])
+                        }
+                        let testTask = TasksOfRealm(value: ["taskList":array!])
+                        try! realm.write {
+                            realm.add(testTask, update: .modified)
+                        }
+                    } else {
+                        let taskInstance = TaskOfRealm()
+                        taskInstance.title = task.title
+                        try! realm.write {
+                            realmResults[0].taskList.append(taskInstance)
+                        }
                     }
                     tableView.reloadData()
                 }

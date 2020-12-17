@@ -15,12 +15,13 @@ struct Task {
 class TaskOfRealm: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var id: Int = 1
-
-    override class func primaryKey() -> String? {
-        "id"
-    }
 }
 
 class TasksOfRealm: Object {
     var taskList = List<TaskOfRealm>()
+    @objc dynamic var id: Int = 1
+
+    override class func primaryKey() -> String? {
+        "id"
+    }
 }
