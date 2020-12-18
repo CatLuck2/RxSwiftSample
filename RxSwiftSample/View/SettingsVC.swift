@@ -23,7 +23,8 @@ class SettingsVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    private var viewModel:ViewModel!
+    private var viewModel = SettingsViewModel(taskRepository: ModelLocator.shared.taskRepository)
+    
     private var disposeBag = DisposeBag()
     // 選択されたセルの番号
     private var numOfSelectedCell:Int?
@@ -50,7 +51,6 @@ class SettingsVC: UIViewController {
     private func setupTableView() {
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "customcell")
         // セルの読み込み
-        viewModel = ViewModel()
         viewModel.tasks.asObservable()
             .bind(to: tableView.rx.items) { tableView, row, element in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customcell") as! CustomCell
