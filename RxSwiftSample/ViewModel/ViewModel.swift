@@ -6,20 +6,35 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 import RealmSwift
 
 class ViewModel {
-    func addToRealm(value: [TaskOfRealm]) {
-        let realm = try! Realm()
-        var dic:[[String:Any]]! = []
-        for task in value {
-            dic.append(["title":task.title])
-        }
-        let testTask = TasksOfRealm(value: ["taskList":dic])
-        try! realm.write {
-            realm.add(testTask, update: .modified)
+
+    let tasks = BehaviorRelay<[TaskOfRealm]>(value: [])
+    var tasksObservable: Observable<[TaskOfRealm]> {
+        return tasks.asObservable()
+    }
+    private let realm = try! Realm()
+
+    init() {
+        if realm.objects(TasksOfRealm.self).isEmpty == false {
+            tasks.accept(Array(realm.objects(TasksOfRealm.self)[0].taskList))
         }
     }
+
+    func addToRealm(value: [TaskOfRealm]) {
+        tasks.accept(tasks.value + value)
+        var dic:[[String:Any]]! = []
+        for task in tasks.value {
+            dic.append(["title":task.title])
+        }
+        try! realm.write {
+            realm.add(TasksOfRealm(value: ["taskList":dic]), update: .modified)
+        }
+    }
+    
     func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
         var tasksArray = value
         tasksArray.remove(at: indexPathRow)
