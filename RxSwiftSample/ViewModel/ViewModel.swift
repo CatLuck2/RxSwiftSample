@@ -35,9 +35,9 @@ class ViewModel {
         }
     }
     
-    func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
-        var tasksArray = value
-        tasksArray.remove(at: indexPathRow)
-        return tasksArray
-    }
+//    func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
+//        var tasksArray = value
+//        tasksArray.remove(at: indexPathRow)
+//        return tasksArray
+//    }
 }
