@@ -11,7 +11,7 @@ import RxCocoa
 
 class CreateAndUpdateVC: UIViewController {
 
-    var viewModel: ViewModel!
+    let viewModel = CreateAndUpdateViewModel(taskRepository: ModelLocator.shared.taskRepository)
     private var disposeBag = DisposeBag()
 
     private var textField = UITextField()
@@ -52,8 +52,7 @@ class CreateAndUpdateVC: UIViewController {
         presentAddVCBarButton.title = "追加"
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
-                viewModel = ViewModel()
-                viewModel.addToRealm(value: [TaskOfRealm(title: textField.text!)])
+                viewModel.add(value: [TaskOfRealm(title: textField.text!)])
                 self.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = presentAddVCBarButton
