@@ -13,9 +13,7 @@ import RealmSwift
 class ViewModel {
 
     let tasks = BehaviorRelay<[TaskOfRealm]>(value: [])
-    var tasksObservable: Observable<[TaskOfRealm]> {
-        return tasks.asObservable()
-    }
+    
     private let realm = try! Realm()
 
     init() {

@@ -13,7 +13,6 @@ class CreateAndUpdateVC: UIViewController {
 
     var viewModel: ViewModel!
     private var disposeBag = DisposeBag()
-    private let taskSubject = PublishSubject<TaskOfRealm>()
 
     private var textField = UITextField()
     var textOfSelectedCell:String?
