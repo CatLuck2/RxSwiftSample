@@ -36,7 +36,6 @@ class SettingsVC: UIViewController {
 
     // 起動時の設定
     private func setupViewController() {
-        self.navigationController?.delegate = self
         // BarButtonItemの設定
         let presentAddVC = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         presentAddVC.rx.tap
@@ -76,34 +75,6 @@ class SettingsVC: UIViewController {
 //                // Realmのデータを削除
 //                let viewModel = ViewModel()
 //                tasks.accept(viewModel.getArrayOfTaskOfRealmAfterDeletedElement(value: tasks.value, indexPathRow: indexPath.row))
-//                viewModel.addToRealm(value: tasks.value)
-//                tableView.reloadData()
-//            }).disposed(by: disposeBag)
-    }
-}
-
-extension SettingsVC: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        self.tableView.reloadData()
-//        guard let vc = viewController as? CreateAndUpdateVC else { return }
-        // CreateAndUpdateVCから遷移してきた時
-//        vc.taskSubjectObservable
-//            .subscribe(onNext: { [self] task in
-//                // numOfSelectedCellが整数（Optionalではない）かどうか
-//                if let indexPathRow = numOfSelectedCell {
-//                    // 初期化
-//                    numOfSelectedCell = nil
-//                    // tasksに更新データ（task）を追加
-//                    // BehaviorRelay内の値は更新できないので、一時変数を経由して、更新データを代入
-//                    var tasksArray = tasks.value
-//                    tasksArray[indexPathRow] = task
-//                    tasks.accept(tasksArray)
-//                } else {
-//                    // tasksに新規データ（task）を追加
-//                    tasks.accept(tasks.value + [task])
-//                }
-//                // Realmにテスト用データを追加
-//                let viewModel = ViewModel()
 //                viewModel.addToRealm(value: tasks.value)
 //                tableView.reloadData()
 //            }).disposed(by: disposeBag)

@@ -13,15 +13,8 @@ class CreateAndUpdateVC: UIViewController {
 
     var viewModel: ViewModel!
     private var disposeBag = DisposeBag()
-    /*
-     ・taskSubject.onNext(Task())
-     ・taskSubjectObservableがtaskSubjectの変更を検知？
-     ・taskSubjectObservableでTask()を取得
-     */
     private let taskSubject = PublishSubject<TaskOfRealm>()
-    var taskSubjectObservable: Observable<TaskOfRealm> {
-        return taskSubject.asObserver()
-    }
+
     private var textField = UITextField()
     var textOfSelectedCell:String?
 
