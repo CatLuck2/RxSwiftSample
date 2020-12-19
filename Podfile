@@ -5,7 +5,8 @@ target 'RxSwiftSample' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'RxSwift'
-  pod 'RxCocoa'
-
+  pod 'RxSwift', '~> 4.3.1'
+  pod 'RxCocoa', '~> 4.3.1'
+  pod 'RxDataSources', '~> 3.1.0'
+  pod 'RealmSwift', '~> 5.4.7'
 end
