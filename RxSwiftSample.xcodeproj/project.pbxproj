@@ -18,7 +18,7 @@
 		61B5EBCB2584F35F00E2A913 /* SettingsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EBC92584F35F00E2A913 /* SettingsVC.xib */; };
 		61B5EBF525875B0700E2A913 /* CreateAndUpdateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EBF325875B0700E2A913 /* CreateAndUpdateVC.swift */; };
 		61B5EBF625875B0700E2A913 /* CreateAndUpdateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EBF425875B0700E2A913 /* CreateAndUpdateVC.xib */; };
-		61B5EC062587AD7400E2A913 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EC052587AD7400E2A913 /* Task.swift */; };
+		61B5EC062587AD7400E2A913 /* ObjectForRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EC052587AD7400E2A913 /* ObjectForRealm.swift */; };
 		61B5EC62258BB81900E2A913 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B5EC60258BB81900E2A913 /* CustomCell.swift */; };
 		61B5EC63258BB81900E2A913 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B5EC61258BB81900E2A913 /* CustomCell.xib */; };
 		8626766712DF95386337D549 /* Pods_RxSwiftSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F818630FEF025D961739D8F /* Pods_RxSwiftSample.framework */; };
@@ -38,7 +38,7 @@
 		61B5EBC92584F35F00E2A913 /* SettingsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsVC.xib; sourceTree = "<group>"; };
 		61B5EBF325875B0700E2A913 /* CreateAndUpdateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAndUpdateVC.swift; sourceTree = "<group>"; };
 		61B5EBF425875B0700E2A913 /* CreateAndUpdateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAndUpdateVC.xib; sourceTree = "<group>"; };
-		61B5EC052587AD7400E2A913 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		61B5EC052587AD7400E2A913 /* ObjectForRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectForRealm.swift; sourceTree = "<group>"; };
 		61B5EC60258BB81900E2A913 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		61B5EC61258BB81900E2A913 /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		6A81EF9EF4607F9B920179EA /* Pods-RxSwiftSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxSwiftSample.release.xcconfig"; path = "Target Support Files/Pods-RxSwiftSample/Pods-RxSwiftSample.release.xcconfig"; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		61B5EC082587AD7B00E2A913 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				61B5EC052587AD7400E2A913 /* Task.swift */,
+				61B5EC052587AD7400E2A913 /* ObjectForRealm.swift */,
 				61B5EC60258BB81900E2A913 /* CustomCell.swift */,
 				61B5EC61258BB81900E2A913 /* CustomCell.xib */,
 				612DCB99258E2E00004E9368 /* TaskModel.swift */,
@@ -259,7 +259,7 @@
 				612DCBA0258E2E79004E9368 /* CreateAndUpdateViewModel.swift in Sources */,
 				61B5EB5C25839EC500E2A913 /* AppDelegate.swift in Sources */,
 				61B5EB5E25839EC500E2A913 /* SceneDelegate.swift in Sources */,
-				61B5EC062587AD7400E2A913 /* Task.swift in Sources */,
+				61B5EC062587AD7400E2A913 /* ObjectForRealm.swift in Sources */,
 				61B5EC62258BB81900E2A913 /* CustomCell.swift in Sources */,
 				61B5EBCA2584F35F00E2A913 /* SettingsVC.swift in Sources */,
 				612DCB9A258E2E00004E9368 /* TaskModel.swift in Sources */,
