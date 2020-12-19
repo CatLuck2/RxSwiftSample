@@ -1,8 +1,8 @@
 //
-//  ViewModel.swift
+//  Model.swift
 //  RxSwiftSample
 //
-//  Created by Nekokichi on 2020/12/17.
+//  Created by Nekokichi on 2020/12/19.
 //
 
 import Foundation
@@ -10,14 +10,17 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-struct SharedViewModel {
+struct SharedModel {
     // 共有インスタンス
-    static let instance = ViewModel()
+    static let instance = TaskModel()
 }
 
-class ViewModel {
-
+final class TaskModel {
     let tasks = BehaviorRelay<[TaskOfRealm]>(value: [])
+    var tasksObservable: Observable<[TaskOfRealm]> {
+        tasks.asObservable()
+    }
+
     private let realm = try! Realm()
 
     init() {
@@ -54,13 +57,10 @@ class ViewModel {
         tasks.accept(self.tasks.value)
     }
 
-    func updateRealmForDelete() {
-        saveProcessOfRealm(valueForSave: tasks.value)
-    }
-    
-    func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
+    func updateRealmForDelete(value: [TaskOfRealm], indexPathRow: Int) {
         var array = value
         array.remove(at: indexPathRow)
-        return array
+        tasks.accept(array)
+        saveProcessOfRealm(valueForSave: tasks.value)
     }
 }

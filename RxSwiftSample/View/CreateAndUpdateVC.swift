@@ -10,9 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreateAndUpdateVC: UIViewController {
+final class CreateAndUpdateVC: UIViewController {
 
-    var viewModel: ViewModel!
+    var viewModel: CreateAndUpdateViewModel! = CreateAndUpdateViewModel(taskModel: SharedModel.instance)
     private var disposeBag = DisposeBag()
     var textOfSelectedCell:String? = nil
     var rowOfSelectedCell:Int? = nil
@@ -46,11 +46,11 @@ class CreateAndUpdateVC: UIViewController {
         }
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
-                viewModel = SharedViewModel.instance
                 if let row = rowOfSelectedCell {
-                    viewModel.updateRealmForEdit(newValue: textField.text!, indexPathRow: row)
+                    viewModel.edit(newValue: textField.text!, indexPathRow: row)
                 } else {
-                    viewModel.addToRealm(newValues: [TaskOfRealm(title: textField.text!)])
+                    guard let text = textField.text else { return }
+                    viewModel.add(newValues: [TaskOfRealm(title: text)])
                 }
                 self.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)

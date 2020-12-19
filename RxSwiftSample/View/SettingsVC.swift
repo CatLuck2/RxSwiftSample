@@ -19,19 +19,12 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-class SettingsVC: UIViewController {
+final class SettingsVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    private var viewModel:ViewModel!
+    private var viewModel:SettingsViewModel! = SettingsViewModel(taskModel: SharedModel.instance)
     private var disposeBag = DisposeBag()
-    // 選択されたセルの番号
-    private var numOfSelectedCell:Int?
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel = SharedViewModel.instance
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +48,7 @@ class SettingsVC: UIViewController {
     private func setupTableView() {
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "customcell")
         // セルの読み込み
-        viewModel = SharedViewModel.instance
-        viewModel.tasks.asObservable()
+        viewModel.tasksObservable
             .bind(to: tableView.rx.items) { tableView, row, element in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customcell") as! CustomCell
                 cell.textLabel?.text = element.title
@@ -66,10 +58,10 @@ class SettingsVC: UIViewController {
         // itemSelected時にsubscribe(タップされたら購読)
         tableView.rx.itemSelected
             .subscribe(onNext: { [self] indexPath in
-                numOfSelectedCell = indexPath.row
                 tableView.deselectRow(at: indexPath, animated: true)
                 let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
-                vc.textOfSelectedCell = viewModel.tasks.value[indexPath.row].title
+                guard let text = tableView.cellForRow(at: indexPath)?.textLabel?.text else { return }
+                vc.textOfSelectedCell = text
                 vc.rowOfSelectedCell = indexPath.row
                 navigationController?.pushViewController(vc, animated: true)
             }).disposed(by: disposeBag)
@@ -79,9 +71,7 @@ class SettingsVC: UIViewController {
             .subscribe(onNext: { [self] indexPath in
                 guard indexPath.isEmpty == false else { return }
                 // Realmのデータを削除
-                viewModel = SharedViewModel.instance
-                viewModel.tasks.accept(viewModel.getArrayOfTaskOfRealmAfterDeletedElement(value: viewModel.tasks.value, indexPathRow: indexPath.row))
-                viewModel.updateRealmForDelete()
+                viewModel.delete(indexPathRow: indexPath.row)
                 tableView.reloadData()
             }).disposed(by: disposeBag)
     }
