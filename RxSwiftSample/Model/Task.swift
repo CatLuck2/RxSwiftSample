@@ -8,10 +8,6 @@
 import Foundation
 import RealmSwift
 
-struct Task {
-    var title: String
-}
-
 class TaskOfRealm: Object {
     @objc dynamic var title: String = ""
     @objc dynamic var id: Int = 1
@@ -20,10 +16,6 @@ class TaskOfRealm: Object {
         self.init()
         self.title = title
     }
-
-//    required init() {
-//        fatalError("init() has not been implemented")
-//    }
 }
 
 class TasksOfRealm: Object {

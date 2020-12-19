@@ -11,16 +11,9 @@ import RxCocoa
 
 class CreateAndUpdateVC: UIViewController {
 
+    let viewModel = CreateAndUpdateViewModel(taskRepository: ModelLocator.shared.taskRepository)
     private var disposeBag = DisposeBag()
-    /*
-     ・taskSubject.onNext(Task())
-     ・taskSubjectObservableがtaskSubjectの変更を検知？
-     ・taskSubjectObservableでTask()を取得
-     */
-    private let taskSubject = PublishSubject<TaskOfRealm>()
-    var taskSubjectObservable: Observable<TaskOfRealm> {
-        return taskSubject.asObserver()
-    }
+
     private var textField = UITextField()
     var textOfSelectedCell:String?
 
@@ -59,8 +52,8 @@ class CreateAndUpdateVC: UIViewController {
         presentAddVCBarButton.title = "追加"
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
-                taskSubject.onNext(TaskOfRealm(title:textField.text!))
-                navigationController?.popViewController(animated: true)
+                viewModel.add(value: [TaskOfRealm(title: textField.text!)])
+                self.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = presentAddVCBarButton
 
