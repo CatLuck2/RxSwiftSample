@@ -16,18 +16,7 @@ class CreateAndUpdateVC: UIViewController {
     private var disposeBag = DisposeBag()
 
     private var textField = UITextField()
-    var textOfSelectedCell:String?
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        guard let text = textOfSelectedCell else {
-            self.title = "追加"
-            return
-        }
-        textField.text = text
-        self.title = "編集"
-    }
+    var textOfSelectedCell:String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +25,6 @@ class CreateAndUpdateVC: UIViewController {
     }
 
     private func setupViewController() {
-        self.navigationController?.title = "追加/編集"
 
         // textFieldのView設定
         textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -50,7 +38,13 @@ class CreateAndUpdateVC: UIViewController {
 
         // BarButtonItemの設定
         let presentAddVCBarButton = UIBarButtonItem()
-        presentAddVCBarButton.title = "追加"
+        if textOfSelectedCell == nil {
+            self.title = "追加"
+            presentAddVCBarButton.title = "追加"
+        } else {
+            self.title = "編集"
+            presentAddVCBarButton.title = "編集"
+        }
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
                 viewModel = SharedViewModel.instance
