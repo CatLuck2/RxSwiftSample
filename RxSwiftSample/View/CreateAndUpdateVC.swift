@@ -14,20 +14,19 @@ class CreateAndUpdateVC: UIViewController {
 
     var viewModel: ViewModel!
     private var disposeBag = DisposeBag()
-
-    private var textField = UITextField()
     var textOfSelectedCell:String? = nil
+    var rowOfSelectedCell:Int? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupViewController()
     }
 
     private func setupViewController() {
 
         // textFieldのView設定
-        textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        textField.text = textOfSelectedCell ?? ""
         textField.borderStyle = .roundedRect
         textField.placeholder = "タスク名を入力"
         self.view.addSubview(textField)
@@ -39,16 +38,20 @@ class CreateAndUpdateVC: UIViewController {
         // BarButtonItemの設定
         let presentAddVCBarButton = UIBarButtonItem()
         if textOfSelectedCell == nil {
-            self.title = "追加"
+            self.title = "タスクを追加"
             presentAddVCBarButton.title = "追加"
         } else {
-            self.title = "編集"
-            presentAddVCBarButton.title = "編集"
+            self.title = "タスクを編集"
+            presentAddVCBarButton.title = "更新"
         }
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
                 viewModel = SharedViewModel.instance
-                viewModel.addToRealm(newValue: [TaskOfRealm(title: textField.text!)])
+                if let row = rowOfSelectedCell {
+                    viewModel.updateRealm(newValue: textField.text!, indexPathRow: row)
+                } else {
+                    viewModel.addToRealm(newValues: [TaskOfRealm(title: textField.text!)])
+                }
                 self.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = presentAddVCBarButton

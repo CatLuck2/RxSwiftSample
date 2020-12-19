@@ -27,6 +27,11 @@ class SettingsVC: UIViewController {
     private var disposeBag = DisposeBag()
     // 選択されたセルの番号
     private var numOfSelectedCell:Int?
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel = SharedViewModel.instance
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,15 +64,16 @@ class SettingsVC: UIViewController {
             }.disposed(by: disposeBag)
 
         // itemSelected時にsubscribe(タップされたら購読)
-//        tableView.rx.itemSelected
-//            .subscribe(onNext: { [self] indexPath in
-//                numOfSelectedCell = indexPath.row
-//                tableView.deselectRow(at: indexPath, animated: true)
-//                let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
-//                vc.textOfSelectedCell = tasks.value[indexPath.row].title
-//                navigationController?.pushViewController(vc, animated: true)
-//            }).disposed(by: disposeBag)
-//
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [self] indexPath in
+                numOfSelectedCell = indexPath.row
+                tableView.deselectRow(at: indexPath, animated: true)
+                let vc = CreateAndUpdateVC(nibName: "CreateAndUpdateVC", bundle: nil)
+                vc.textOfSelectedCell = viewModel.tasks.value[indexPath.row].title
+                vc.rowOfSelectedCell = indexPath.row
+                navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: disposeBag)
+
         // セルが削除された時
         tableView.rx.itemDeleted
             .subscribe(onNext: { [self] indexPath in
@@ -75,7 +81,7 @@ class SettingsVC: UIViewController {
                 // Realmのデータを削除
                 viewModel = SharedViewModel.instance
                 viewModel.tasks.accept(viewModel.getArrayOfTaskOfRealmAfterDeletedElement(value: viewModel.tasks.value, indexPathRow: indexPath.row))
-                viewModel.updateRealm(updatedValue: viewModel.tasks.value)
+                viewModel.updateRealm()
                 tableView.reloadData()
             }).disposed(by: disposeBag)
     }

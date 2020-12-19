@@ -18,7 +18,7 @@ struct SharedViewModel {
 class ViewModel {
 
     let tasks = BehaviorRelay<[TaskOfRealm]>(value: [])
-    
+
     private let realm = try! Realm()
 
     init() {
@@ -37,18 +37,31 @@ class ViewModel {
         }
     }
 
-    func addToRealm(newValue: [TaskOfRealm]) {
-        tasks.accept(tasks.value + newValue)
+    func addToRealm(newValues: [TaskOfRealm]) {
+        tasks.accept(tasks.value + newValues)
         saveProcessOfRealm(valueForSave: tasks.value)
     }
 
-    func updateRealm(updatedValue: [TaskOfRealm]) {
-        saveProcessOfRealm(valueForSave: tasks.value)
+    func updateRealm(newValue: String? = nil, indexPathRow: Int? = nil) {
+        guard let text = newValue,
+              let row = indexPathRow else {
+            // 削除
+            saveProcessOfRealm(valueForSave: tasks.value)
+            return
+        }
+        // 編集
+        let array = tasks.value
+        try! realm.write {
+            // Realmへの保存
+            array[row].title = text
+        }
+        // tasksの更新
+        tasks.accept(array)
     }
     
     func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
-        var tasksArray = value
-        tasksArray.remove(at: indexPathRow)
-        return tasksArray
+        var array = value
+        array.remove(at: indexPathRow)
+        return array
     }
 }
