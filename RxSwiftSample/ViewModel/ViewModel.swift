@@ -27,8 +27,7 @@ class ViewModel {
         }
     }
 
-    func addToRealm(value: [TaskOfRealm]) {
-        tasks.accept(tasks.value + value)
+    private func saveProcessOfRealm(valueForSave: [TaskOfRealm]) {
         var dic:[[String:Any]]! = []
         for task in tasks.value {
             dic.append(["title":task.title])
@@ -37,10 +36,19 @@ class ViewModel {
             realm.add(TasksOfRealm(value: ["taskList":dic]), update: .modified)
         }
     }
+
+    func addToRealm(newValue: [TaskOfRealm]) {
+        tasks.accept(tasks.value + newValue)
+        saveProcessOfRealm(valueForSave: tasks.value)
+    }
+
+    func updateRealm(updatedValue: [TaskOfRealm]) {
+        saveProcessOfRealm(valueForSave: tasks.value)
+    }
     
-//    func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
-//        var tasksArray = value
-//        tasksArray.remove(at: indexPathRow)
-//        return tasksArray
-//    }
+    func getArrayOfTaskOfRealmAfterDeletedElement(value: [TaskOfRealm], indexPathRow: Int) -> [TaskOfRealm] {
+        var tasksArray = value
+        tasksArray.remove(at: indexPathRow)
+        return tasksArray
+    }
 }

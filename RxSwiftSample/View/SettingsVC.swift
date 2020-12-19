@@ -68,15 +68,15 @@ class SettingsVC: UIViewController {
 //                navigationController?.pushViewController(vc, animated: true)
 //            }).disposed(by: disposeBag)
 //
-//        // セルが削除された時
-//        tableView.rx.itemDeleted
-//            .subscribe(onNext: { [self] indexPath in
-//                guard indexPath.isEmpty == false else { return }
-//                // Realmのデータを削除
-//                let viewModel = ViewModel()
-//                tasks.accept(viewModel.getArrayOfTaskOfRealmAfterDeletedElement(value: tasks.value, indexPathRow: indexPath.row))
-//                viewModel.addToRealm(value: tasks.value)
-//                tableView.reloadData()
-//            }).disposed(by: disposeBag)
+        // セルが削除された時
+        tableView.rx.itemDeleted
+            .subscribe(onNext: { [self] indexPath in
+                guard indexPath.isEmpty == false else { return }
+                // Realmのデータを削除
+                viewModel = SharedViewModel.instance
+                viewModel.tasks.accept(viewModel.getArrayOfTaskOfRealmAfterDeletedElement(value: viewModel.tasks.value, indexPathRow: indexPath.row))
+                viewModel.updateRealm(updatedValue: viewModel.tasks.value)
+                tableView.reloadData()
+            }).disposed(by: disposeBag)
     }
 }

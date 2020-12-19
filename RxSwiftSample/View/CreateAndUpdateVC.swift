@@ -54,7 +54,7 @@ class CreateAndUpdateVC: UIViewController {
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
                 viewModel = SharedViewModel.instance
-                viewModel.addToRealm(value: [TaskOfRealm(title: textField.text!)])
+                viewModel.addToRealm(newValue: [TaskOfRealm(title: textField.text!)])
                 self.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
         navigationItem.rightBarButtonItem = presentAddVCBarButton
