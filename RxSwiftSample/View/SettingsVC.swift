@@ -50,7 +50,7 @@ class SettingsVC: UIViewController {
     private func setupTableView() {
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "customcell")
         // セルの読み込み
-        viewModel = ViewModel()
+        viewModel = SharedViewModel.instance
         viewModel.tasks.asObservable()
             .bind(to: tableView.rx.items) { tableView, row, element in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "customcell") as! CustomCell

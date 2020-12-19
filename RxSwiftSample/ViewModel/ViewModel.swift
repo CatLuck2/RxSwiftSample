@@ -10,6 +10,11 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
+struct SharedViewModel {
+    // 共有インスタンス
+    static let instance = ViewModel()
+}
+
 class ViewModel {
 
     let tasks = BehaviorRelay<[TaskOfRealm]>(value: [])

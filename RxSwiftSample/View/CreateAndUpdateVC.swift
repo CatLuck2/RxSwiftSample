@@ -52,7 +52,7 @@ class CreateAndUpdateVC: UIViewController {
         presentAddVCBarButton.title = "追加"
         presentAddVCBarButton.rx.tap
             .subscribe(onNext: { [self] in
-                viewModel = ViewModel()
+                viewModel = SharedViewModel.instance
                 viewModel.addToRealm(value: [TaskOfRealm(title: textField.text!)])
                 self.navigationController?.popViewController(animated: true)
             }).disposed(by: disposeBag)
