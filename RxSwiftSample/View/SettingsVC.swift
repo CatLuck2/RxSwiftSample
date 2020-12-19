@@ -81,7 +81,7 @@ class SettingsVC: UIViewController {
                 // Realmのデータを削除
                 viewModel = SharedViewModel.instance
                 viewModel.tasks.accept(viewModel.getArrayOfTaskOfRealmAfterDeletedElement(value: viewModel.tasks.value, indexPathRow: indexPath.row))
-                viewModel.updateRealm()
+                viewModel.updateRealmForDelete()
                 tableView.reloadData()
             }).disposed(by: disposeBag)
     }

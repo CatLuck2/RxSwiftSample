@@ -48,7 +48,7 @@ class CreateAndUpdateVC: UIViewController {
             .subscribe(onNext: { [self] in
                 viewModel = SharedViewModel.instance
                 if let row = rowOfSelectedCell {
-                    viewModel.updateRealm(newValue: textField.text!, indexPathRow: row)
+                    viewModel.updateRealmForEdit(newValue: textField.text!, indexPathRow: row)
                 } else {
                     viewModel.addToRealm(newValues: [TaskOfRealm(title: textField.text!)])
                 }
